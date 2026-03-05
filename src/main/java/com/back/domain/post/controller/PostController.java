@@ -1,18 +1,24 @@
 package com.back.domain.post.controller;
 
+import com.back.domain.post.entity.Post;
+import com.back.domain.post.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
-    @GetMapping("/posts/writeform")
+    private final PostService postService;
+
+    @GetMapping("/posts/write-form")
     @ResponseBody
     public String writeForm() {
 
         return """
-                <form action="http://localhost:8080/posts/write">
+                <form action="/posts/write">
                   <input type="text" name="title">
                   <br>
                   <textarea name="content"></textarea>
@@ -24,9 +30,11 @@ public class PostController {
 
     @GetMapping("/posts/write")
     @ResponseBody
-    public String write() {
+    public String write(String title, String content) {
 
-        return "글이 작성되었습니다.";
+        Post post = postService.write(title, content);
+
+        return "%d번 글이 작성되었습니다.".formatted(post.getId());
     }
 
 }
