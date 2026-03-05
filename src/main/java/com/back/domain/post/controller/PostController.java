@@ -29,12 +29,12 @@ public class PostController {
     @AllArgsConstructor
     @Getter
     public static class WriteRequestForm {
-        @Size(min = 2, max = 10)
-        @NotBlank
+        @Size(min = 2, max = 10, message = "제목은 2자 이상 10자 이하로 입력해주세요.")
+        @NotBlank(message = "제목은 필수입니다.")
         private String title;
 
-        @Size(min = 2, max = 100)
-        @NotBlank
+        @Size(min = 2, max = 100, message = "제목은 2자 이상 100자 이하로 입력해주세요.")
+        @NotBlank(message = "내용은 필수입니다.")
         private String content;
     }
 
