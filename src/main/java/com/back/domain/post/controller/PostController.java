@@ -10,9 +10,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,12 +32,12 @@ public class PostController {
     @AllArgsConstructor
     @Getter
     public static class WriteRequestForm {
-        @Size(min = 2, max = 10, message = "제목은 2자 이상 10자 이하로 입력해주세요.")
-        @NotBlank(message = "제목은 필수입니다.")
+        @Size(min = 2, max = 10, message = "3-제목은 2자 이상 10자 이하로 입력해주세요.")
+        @NotBlank(message = "1-제목은 필수입니다.")
         private String title;
 
-        @Size(min = 2, max = 100, message = "제목은 2자 이상 100자 이하로 입력해주세요.")
-        @NotBlank(message = "내용은 필수입니다.")
+        @Size(min = 2, max = 100, message = "4-제목은 2자 이상 100자 이하로 입력해주세요.")
+        @NotBlank(message = "2-내용은 필수입니다.")
         private String content;
     }
 
@@ -44,10 +47,14 @@ public class PostController {
 
         if (bindingResult.hasErrors()) {
 
-            String fieldName = bindingResult.getFieldError().getField();
-            String errorMessage = bindingResult.getFieldError().getDefaultMessage();
+            String errorMessage = "";
+            List<FieldError> fieldErrorList  = bindingResult.getFieldErrors();
+            for (FieldError fieldError : fieldErrorList) {
+                String fieldName = fieldError.getField();
+                errorMessage += fieldError.getDefaultMessage() + "<br>";
+            }
 
-            return getWriteForm(errorMessage, form.title, form.content, fieldName);
+            return getWriteForm(errorMessage, form.title, form.content, "title");
         }
 
         Post post = postService.write(form.title, form.content);
