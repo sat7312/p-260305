@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,9 +47,13 @@ public class PostController {
         if (bindingResult.hasErrors()) {
             String errorMessages = bindingResult.getFieldErrors()
                     .stream()
-                    .map(FieldError::getDefaultMessage)
+                    .map((fieldError) -> fieldError.getField() + "-" + fieldError.getDefaultMessage())
+                    .map((message) -> {
+                        String[] bits = message.split("-"); // [field, 1, errorMessage]
+                        return "<!-- %s --> <li data-error-field=\"%s\">%s</li>".formatted(bits[1], bits[0], bits[2]);
+                    })
                     .sorted()
-                    .collect(Collectors.joining("<br>"));
+                    .collect(Collectors.joining("\n"));
 
             return getWriteForm(errorMessages, form.title, form.content, "title");
         }
