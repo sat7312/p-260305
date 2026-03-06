@@ -24,7 +24,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts/write-form")
-    public String writeForm() {
+    public String writeForm(@ModelAttribute("form") WriteRequestForm form) {
         return "write";
     }
 
@@ -57,7 +57,6 @@ public class PostController {
 
             // 템플릿 응답
             model.addAttribute("errorMessages", errorMessages);
-            model.addAttribute("form", form);
             return "write";
         }
 
