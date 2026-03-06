@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -50,5 +51,13 @@ public class PostController {
 
         model.addAttribute("id", post.getId());
         return "redirect:/posts/write"; // GET 요청
+    }
+
+    @GetMapping("/posts/{id}")
+    public String detail(@PathVariable int id, Model model) {
+        Post post = postService.findById(id).get();
+        model.addAttribute("post", post);
+
+        return "detail";
     }
 }
