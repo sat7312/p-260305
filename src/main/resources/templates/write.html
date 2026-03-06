@@ -6,7 +6,7 @@
 </head>
 <body>
 <ul style="color:red" th:utext="${errorMessages}"></ul>
-<form method="POST" action="/posts/write" th:object="${form}">
+<form method="POST" th:object="${form}">
 
     <div th:replace="form_errors::formErrorsFragment"></div>
 

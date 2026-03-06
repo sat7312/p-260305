@@ -21,11 +21,6 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/posts/write-form")
-    public String writeForm(@ModelAttribute("form") WriteRequestForm form) {
-        return "write";
-    }
-
     @AllArgsConstructor
     @Getter
     public static class WriteRequestForm {
@@ -36,6 +31,11 @@ public class PostController {
         @Size(min = 2, max = 100, message = "04-content-내용은 2자 이상 100자 이하로 입력해주세요.")
         @NotBlank(message = "02-content-내용은 필수입니다.")
         private String content;
+    }
+
+    @GetMapping("/posts/write")
+    public String writeForm(@ModelAttribute("form") WriteRequestForm form) {
+        return "write";
     }
 
     @PostMapping("/posts/write")
