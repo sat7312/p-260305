@@ -5,19 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<ul style="color:red" th:utext="${errorMessages}">
-</ul>
-
+<ul style="color:red" th:utext="${errorMessages}"></ul>
 <form method="POST" action="/posts/write" th:object="${form}">
-    <ul th:if="${#fields.hasAnyErrors()}" style="color:red">
-        <li th:each="err : ${#fields.allErrors().stream().sorted()}"
-            th:with="errorFieldName=${err.split('-')[1]},
-                     errorMessage=${err.split('-')[2]}"
 
-            th:text="${errorMessage}"
-            th:data-error-field="${errorFieldName}"
-        ></li>
-    </ul>
+    <div th:replace="form_errors::formErrorsFragment"></div>
+
     <div>
         <label for="title">제목</label>
         <div>
@@ -32,15 +24,5 @@
     </div>
     <input type="submit" value="작성">
 </form>
-
-<script>
-    const li = document.querySelector("ul li");
-    const errorFieldName = li.dataset.errorField;
-
-    if(errorFieldName.length > 0) {
-        const form = document.querySelector("form");
-        form[errorFieldName].focus();
-    }
-</script>
 </body>
 </html>
