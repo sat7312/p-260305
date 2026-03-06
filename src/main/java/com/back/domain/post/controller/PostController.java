@@ -56,6 +56,7 @@ public class PostController {
 
             // 템플릿 응답
             model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("form", form);
             return "write";
         }
 
