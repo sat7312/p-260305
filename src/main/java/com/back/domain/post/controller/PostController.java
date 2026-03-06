@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,15 +46,13 @@ public class PostController {
     public String write(@Valid WriteRequestForm form, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+            String errorMessages = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .sorted()
+                    .collect(Collectors.joining("<br>"));
 
-            String errorMessage = "";
-            List<FieldError> fieldErrorList  = bindingResult.getFieldErrors();
-            for (FieldError fieldError : fieldErrorList) {
-                String fieldName = fieldError.getField();
-                errorMessage += fieldError.getDefaultMessage() + "<br>";
-            }
-
-            return getWriteForm(errorMessage, form.title, form.content, "title");
+            return getWriteForm(errorMessages, form.title, form.content, "title");
         }
 
         Post post = postService.write(form.title, form.content);
