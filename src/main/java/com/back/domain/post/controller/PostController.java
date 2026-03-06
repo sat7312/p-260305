@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class PostController {
     }
 
     @PostMapping("/posts/write")
-    public String write(@Valid WriteRequestForm form, BindingResult bindingResult,
+    public String write(@ModelAttribute("form") @Valid WriteRequestForm form, BindingResult bindingResult,
                         Model model) {
 
         if (bindingResult.hasErrors()) {
