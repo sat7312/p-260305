@@ -22,7 +22,8 @@ public class PostService {
     public Post modify(int id, String title, String content) {
         Post post = postRepository.findById(id).get();
         post.update(title, content);
-        return postRepository.save(post);
+
+        return post;
     }
 
     public long count() {
