@@ -19,6 +19,12 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public Post modify(int id, String title, String content) {
+        Post post = postRepository.findById(id).get();
+        post.update(title, content);
+        return postRepository.save(post);
+    }
+
     public long count() {
         return postRepository.count();
     }
