@@ -40,8 +40,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/write")
-    public String write(@ModelAttribute("form") @Valid WriteRequestForm form, BindingResult bindingResult,
-                        Model model) {
+    public String write(@ModelAttribute("form") @Valid WriteRequestForm form,
+                        BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return "write";
@@ -50,7 +50,7 @@ public class PostController {
         Post post = postService.write(form.title, form.content);
 
         model.addAttribute("id", post.getId());
-        return "redirect:/posts/write"; // GET 요청
+        return "redirect:/posts/%d".formatted(post.getId()); // GET 요청
     }
 
     @GetMapping("/posts/{id}")
