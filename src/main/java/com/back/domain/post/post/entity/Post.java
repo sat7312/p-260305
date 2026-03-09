@@ -25,7 +25,6 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-
     private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content) {
@@ -46,5 +45,5 @@ public class Post extends BaseEntity {
         return comment;
     }
 
-    // 댓글 추가, 수정, 삭제, 조회
+    // 수정, 삭제, 조회
 }
