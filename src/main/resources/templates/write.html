@@ -5,11 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<ul style="color:red" th:utext="${errorMessages}"></ul>
-<form method="POST" th:object="${form}">
+<form method="post" th:object="${form}">
 
     <div th:replace="form_errors::formErrorsFragment"></div>
-
     <div>
         <label for="title">제목</label>
         <div>

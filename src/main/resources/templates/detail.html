@@ -1,4 +1,3 @@
-
 <html lang="ko" layout:decorate="~{layout}">
 <head>
     <title th:text="|글 상세|"></title>
@@ -14,6 +13,7 @@
     </h2>
     <h3>내용</h3>
     <div th:text="${post.content}">내용</div>
+
     <div>
         <a th:href="@{/posts}">글 목록</a>
         <a th:href="@{/posts/{id}/modify(id=${post.id})}">수정</a>

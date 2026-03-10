@@ -31,7 +31,6 @@ public class BaseInitData {
         if(postService.count() > 0) {
             return;
         }
-
         Post post1 = postService.write("제목1", "내용1");
         Post post2 = postService.write("제목2", "내용2");
         postService.write("제목3", "내용3");

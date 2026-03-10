@@ -40,6 +40,7 @@ public class Post extends BaseEntity {
     }
 
     // 댓글 추가
+
     public Comment addComment(String content) {
         Comment comment = new Comment(content, this);
         comments.add(comment);

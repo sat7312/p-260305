@@ -30,12 +30,12 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public long count() {
-        return postRepository.count();
-    }
-
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
+    }
+
+    public long count() {
+        return postRepository.count();
     }
 
     public List<Post> findAll() {
