@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -66,7 +67,7 @@ public class CommentController {
         String content
     ) {}
 
-    @PostMapping("/posts/{postId}/comments/{commentId}/modify")
+    @PutMapping("/posts/{postId}/comments/{commentId}/modify")
     @Transactional
     public String modify(
             @PathVariable int postId,
