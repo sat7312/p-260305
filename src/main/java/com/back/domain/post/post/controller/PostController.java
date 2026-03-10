@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -70,7 +67,7 @@ public class PostController {
         return "modify";
     }
 
-    @PostMapping("/posts/{id}/modify")
+    @PutMapping("/posts/{id}/modify")
     @Transactional
     public String modify(@PathVariable int id,
                          @ModelAttribute("form") @Valid ModifyRequestForm form,
@@ -82,6 +79,12 @@ public class PostController {
 
         Post post = postService.modify(id, form.title, form.content);
         return "redirect:/posts/%d".formatted(post.getId()); // GET 요청
+    }
+
+    @DeleteMapping("/posts/{id}/delete")
+    public String delete(@PathVariable int id) {
+        postService.deleteById(id);
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts")
