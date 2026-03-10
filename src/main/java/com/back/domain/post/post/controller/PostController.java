@@ -63,11 +63,12 @@ public class PostController {
         Post post = postService.findById(id).get();
         ModifyRequestForm modifyRequestForm = new ModifyRequestForm(post.getTitle(), post.getContent());
         model.addAttribute("form", modifyRequestForm);
+        model.addAttribute("post", post);
 
         return "modify";
     }
 
-    @PutMapping("/posts/{id}/modify")
+    @PutMapping("/posts/{id}")
     @Transactional
     public String modify(@PathVariable int id,
                          @ModelAttribute("form") @Valid ModifyRequestForm form,
@@ -81,7 +82,7 @@ public class PostController {
         return "redirect:/posts/%d".formatted(post.getId()); // GET 요청
     }
 
-    @DeleteMapping("/posts/{id}/delete")
+    @DeleteMapping("/posts/{id}")
     public String delete(@PathVariable int id) {
         postService.deleteById(id);
         return "redirect:/posts";
